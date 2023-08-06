@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" th:text="${curUser.getEmail()} + ' with roles: ' + ${curUser.toRolesString(curUser.getRoles())}">...</a>
+        <a class="navbar-brand mr-sm-2 text-white-50" href="/logout">Logout</a>
+    </div>
+
+</nav>
+
+<div class="row ">
+    <div class="col-md-2 bg-white">
+        <br/>
+    </div>
+    <div class="col-md-10 ">
+        <br/>
+    </div>
+</div>
+
+<div class="row ">
+    <div class="col-md-2 bg-white">
+        <ul class="nav flex-column nav-pills ">
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+            <li class="nav-item">
+                <a class="nav-link" href="/admin">Admin</a>
+            </li>
+            </div>
+            <li class="nav-item">
+                <a class="nav-link active" href="/user">User</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-md-10 bg-light ">
+
+        <h2>User information page</h2>
+        <table class="table table-striped table-hover">
+
+            <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="/admin">About user</a>
+                </div>
+            </nav>
+
+
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="table-active">
+            <tr>
+                <td th:text="${curUser.getId()}"></td>
+                <td th:text="${curUser.getFirstName()}"></td>
+                <td th:text="${curUser.getLastName()}"></td>
+                <td th:text="${curUser.getAge()}"></td>
+                <td th:text="${curUser.getEmail()}"></td>
+                <td th:text="${curUser.toRolesString(curUser.roles)}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
