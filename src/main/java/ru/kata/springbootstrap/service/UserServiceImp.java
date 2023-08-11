@@ -75,8 +75,15 @@ public class UserServiceImp implements UserService {
 
     @Transactional
     public void update(Long id, User updatedUser) {
-        updatedUser.setId(id);
-        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        User user = findUserById(id);
+        if (updatedUser.getRoles() == null) {
+            updatedUser.setRoles(user.getRoles());
+        }
+        if (updatedUser.getPassword().equals("")) {
+            updatedUser.setPassword(user.getPassword());
+        } else {
+            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
         userRepository.save(updatedUser);
 
     }
