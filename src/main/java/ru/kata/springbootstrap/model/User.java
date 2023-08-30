@@ -27,8 +27,8 @@ public class User implements UserDetails {
     @NotEmpty
     private String password;
     @Column(unique = true)
-    @Email
     @NotEmpty
+    @Email
     private String email;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -104,6 +104,9 @@ public class User implements UserDetails {
         return roles.stream().map(role -> role.getName().replace("ROLE_", ""))
                 .collect(Collectors.joining(" "));
 
+    }
+    public boolean checkRolesAdmin(Set <Role> roles) {
+        return roles.stream().map(Role::getName).collect(Collectors.toList()).contains("ROLE_ADMIN");
     }
 
     @Override
